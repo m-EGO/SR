@@ -53,33 +53,28 @@ function actualizarContador() {
     const fechaInicio = new Date('2023-01-02'); // Cambia esta fecha por la que desees
     const ahora = new Date();
 
+    // Calcular diferencia total en milisegundos
+    const diferencia = ahora - fechaInicio;
+
+    // Descomponer la diferencia en unidades
+    let segundos = Math.floor(diferencia / 1000) % 60;
+    let minutos = Math.floor(diferencia / (1000 * 60)) % 60;
+    let horas = Math.floor(diferencia / (1000 * 60 * 60)) % 24;
+    let dias = Math.floor(diferencia / (1000 * 60 * 60 * 24));
+
+    // Cálculo de meses y años (ajustado)
     let anos = ahora.getFullYear() - fechaInicio.getFullYear();
     let meses = ahora.getMonth() - fechaInicio.getMonth();
-    let dias = ahora.getDate() - fechaInicio.getDate();
-    let horas = ahora.getHours() - fechaInicio.getHours();
-    let minutos = ahora.getMinutes() - fechaInicio.getMinutes();
-    let segundos = ahora.getSeconds() - fechaInicio.getSeconds();
-
-    // Ajustar días si es negativo
-    if (dias < 0) {
-        meses--;
-        const ultimoDiaMesAnterior = new Date(ahora.getFullYear(), ahora.getMonth(), 0).getDate();
-        dias += ultimoDiaMesAnterior;
-    }
-
-    // Ajustar meses si es negativo
+    
     if (meses < 0) {
         anos--;
         meses += 12;
     }
 
-    // Asegurar que los valores no sean negativos
-    if (anos < 0) anos = 0;
-    if (meses < 0) meses = 0;
-    if (dias < 0) dias = 0;
-    if (horas < 0) horas = 0;
-    if (minutos < 0) minutos = 0;
-    if (segundos < 0) segundos = 0;
+    // Actualizar solo si la diferencia es positiva
+    if (diferencia < 0) {
+        anos = meses = dias = horas = minutos = segundos = 0;
+    }
 
     document.getElementById('anos').textContent = anos;
     document.getElementById('meses').textContent = meses;
@@ -88,6 +83,7 @@ function actualizarContador() {
     document.getElementById('minutos').textContent = minutos;
     document.getElementById('segundos').textContent = segundos;
 }
+
 
 // Actualizar el contador cada segundo
 setInterval(actualizarContador, 1000);
