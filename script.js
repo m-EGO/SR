@@ -50,7 +50,7 @@ function mostrarContador() {
 
 // Función para actualizar el contador
 function actualizarContador() {
-    const fechaInicio = new Date('2023-01-02');
+    const fechaInicio = new Date(2023,0,2);
     const ahora = new Date();
 
     // Calcular diferencia total en milisegundos
