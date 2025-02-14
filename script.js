@@ -50,7 +50,7 @@ function mostrarContador() {
 
 // Función para actualizar el contador
 function actualizarContador() {
-    const fechaInicio = new Date('2001-06-02'); // Cambia esta fecha por la que desees
+    const fechaInicio = new Date('2023-01-02'); // Cambia esta fecha por la que desees
     const ahora = new Date();
 
     let anos = ahora.getFullYear() - fechaInicio.getFullYear();
