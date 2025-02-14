@@ -50,32 +50,31 @@ function mostrarContador() {
 
 // Función para actualizar el contador
 function actualizarContador() {
-    const fechaInicio = new Date('2023-01-02'); // Cambia esta fecha por la que desees
+    const fechaInicio = new Date('2023-01-02');
     const ahora = new Date();
 
     // Calcular diferencia total en milisegundos
     const diferencia = ahora - fechaInicio;
 
-    // Descomponer la diferencia en unidades
+    if (diferencia < 0) {
+        // Si la fecha de inicio es futura, mostrar todo en 0
+        document.querySelectorAll('.contador span').forEach(span => span.textContent = '0');
+        return;
+    }
+
+    // Calcular unidades de tiempo
     let segundos = Math.floor(diferencia / 1000) % 60;
     let minutos = Math.floor(diferencia / (1000 * 60)) % 60;
     let horas = Math.floor(diferencia / (1000 * 60 * 60)) % 24;
-    let dias = Math.floor(diferencia / (1000 * 60 * 60 * 24));
+    let diasTotal = Math.floor(diferencia / (1000 * 60 * 60 * 24));
 
-    // Cálculo de meses y años (ajustado)
-    let anos = ahora.getFullYear() - fechaInicio.getFullYear();
-    let meses = ahora.getMonth() - fechaInicio.getMonth();
-    
-    if (meses < 0) {
-        anos--;
-        meses += 12;
-    }
+    // Calcular años y meses restantes
+    let anos = Math.floor(diasTotal / 365);
+    let diasRestantes = diasTotal % 365;
+    let meses = Math.floor(diasRestantes / 30); // Aproximación de 30 días por mes
+    let dias = diasRestantes % 30;
 
-    // Actualizar solo si la diferencia es positiva
-    if (diferencia < 0) {
-        anos = meses = dias = horas = minutos = segundos = 0;
-    }
-
+    // Actualizar DOM
     document.getElementById('anos').textContent = anos;
     document.getElementById('meses').textContent = meses;
     document.getElementById('dias').textContent = dias;
